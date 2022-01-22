@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [chosenLevel, setChosenLevel] = useState(null);
+  const [words, setWords] = useState(null);
 
   const getRandomWords = () => {
     const options = {
@@ -19,13 +20,14 @@ function App() {
       .request(options)
       .then((response) => {
         console.log(response.data);
+        setWords(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  console.log(chosenLevel);
+  console.log(words);
 
   useEffect(() => {
     if (chosenLevel) getRandomWords();
