@@ -21,8 +21,20 @@ code {
 }
 
 .question-box {
-  background-color: blue;
+  background-color: antiquewhite;
   padding: 10px;
   border-radius: 20px;
   margin: 10px;
+}
+
+/* styling for answer buttons to be next to each other */
+.question-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+/* styling for the div that would be responsible for the stacked "correct" under the button div */
+.question-button {
+  display: flex;
+  flex-direction: column;
 }

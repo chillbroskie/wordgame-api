@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 function App() {
   const [chosenLevel, setChosenLevel] = useState(null);
   const [words, setWords] = useState(null);
+  // array / state of all teh correct answers of the game
+  const [correctAnswers, setCorrectAnswers] = useState([]);
 
   const getRandomWords = () => {
     const options = {
@@ -33,6 +35,16 @@ function App() {
     if (chosenLevel) getRandomWords();
   }, [chosenLevel]);
 
+  // this function checks the answer the player has selected with the correct answer of the cards, the +1 is already included here for the index from below
+  const checkAnswer = (option, optionIndex, correctAnswer) => {
+    console.log(optionIndex, correctAnswer);
+    if (optionIndex == correctAnswer) {
+      setCorrectAnswers([...correctAnswers, option]);
+    }
+  };
+
+  console.log(correctAnswers);
+
   return (
     <div className="App">
       {!chosenLevel && (
@@ -53,10 +65,33 @@ function App() {
         </div>
       )}
 
-      {chosenLevel && (
+      {chosenLevel && words && (
         <div className="question-area">
           <h1>Welcome to level: {chosenLevel}</h1>
-          <div className="question-box"></div>
+
+          {words.quizlist.map((question, questionIndex) => (
+            <div className="question-box">
+              {question.quiz.map((tip, _index) => (
+                <p key={_index}>{tip}</p>
+              ))}
+              <div className="question-buttons">
+                {question.option.map((option, optionIndex) => (
+                  <div className="question-button">
+                    {/* give each button an index and add 1 to be able to match with answers */}
+                    <button
+                      onClick={() =>
+                        checkAnswer(option, optionIndex + 1, question.correct)
+                      }
+                    >
+                      {option}
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <p>{question.correct}</p>
+            </div>
+          ))}
         </div>
       )}
     </div>
